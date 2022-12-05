@@ -27,7 +27,7 @@ def get_json(url, token):
 
 def check_name(name):
     if not re.match(r"^[-\.\w]*$", name):
-        raise RuntimeError("invalid name '{0}'".format(name))
+        raise RuntimeError("GHB: invalid name '{0}'".format(name))
     return name
 
 
@@ -51,6 +51,7 @@ def mirror(repo_name, repo_url, to_path, username, token):
 
     repo_path = os.path.join(to_path, repo_name)
     mkdir(repo_path)
+    print("GHB: mirroring {0}".format(repo_name))
 
     # git-init manual:
     # "Running git init in an existing repository is safe."
@@ -84,7 +85,7 @@ def main():
     token = config["token"]
     path = os.path.expanduser(config["directory"])
     if mkdir(path):
-        print("Created directory {0}".format(path), file=sys.stderr)
+        print("GHB: created directory {0}".format(path), file=sys.stderr)
 
     user = next(get_json("https://api.github.com/user", token))
     for page in get_json("https://api.github.com/user/repos", token):
