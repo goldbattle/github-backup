@@ -42,6 +42,7 @@ def mkdir(path):
 
 
 def mirror(repo_name, repo_url, to_path, username, token):
+    print("GHB: mirroring {0}".format(repo_url))
     parsed = urllib.parse.urlparse(repo_url)
     modified = list(parsed)
     modified[1] = "{username}:{token}@{netloc}".format(
@@ -51,27 +52,17 @@ def mirror(repo_name, repo_url, to_path, username, token):
 
     repo_path = os.path.join(to_path, repo_name)
     mkdir(repo_path)
-    print("GHB: mirroring {0}".format(repo_name))
 
     # git-init manual:
     # "Running git init in an existing repository is safe."
-    subprocess.call(["git", "init", "--bare", "--quiet"], cwd=repo_path)
+    # https://stackoverflow.com/a/8235171/7718197
+    cmd = "git init --bare --quiet"
+    subprocess.Popen(cmd, cwd=repo_path, shell=True).wait()
 
     # https://github.com/blog/1270-easier-builds-and-deployments-using-git-over-https-and-oauth:
     # "To avoid writing tokens to disk, don't clone."
-    subprocess.call(
-        [
-            "git",
-            "fetch",
-            "--force",
-            "--prune",
-            "--tags",
-            repo_url,
-            "refs/heads/*:refs/heads/*",
-        ],
-        cwd=repo_path,
-    )
-
+    cmd = "git fetch --force --prune --tags " + repo_url + " refs/heads/*:refs/heads/*"
+    subprocess.Popen(cmd, cwd=repo_path, shell=True).wait()
 
 def main():
     parser = argparse.ArgumentParser(description="Backup GitHub repositories")

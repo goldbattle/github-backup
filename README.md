@@ -28,5 +28,16 @@ To backup public and private repositories you need to select only the **repo** s
 
 After clicking the **Generate token** button you're presented with the generated token. Remember to store it now, as GitHub won't show it to you anymore!
 
+
+### Unraid Setup
+
+https://hub.docker.com/r/goldbattle/github-backup
+
+- `PUID` (variable) - set this to 99
+- `PGID` (variable) - set this to 100
+- `TOKEN` (variable) - your github token found from above
+- `/home/docker/backups` (path) - map this to were you want to save the repos
+- `SCHEDULE` (variable) - time in seconds to wait between runs (43200 is every 12 hrs)
+
 ## Final notes
 If you notice any bugs, feel free to open an Issue or a pull request. For support with using this on Unraid, you can reach me best via the [support thread](https://forums.unraid.net/topic/104589-support-lnxd-phoenixminer-amd/) on the Unraid Community Forums.

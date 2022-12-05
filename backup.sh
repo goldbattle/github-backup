@@ -6,6 +6,11 @@ echo "Base:    Alpine 3.9"
 echo "Target:  Unraid"
 echo ""
 
+SCHEDULE=${SCHEDULE:-43200}
+echo "SCHEDULE = $SCHEDULE"
+echo "TOKEN    = REDACTED"
+echo ""
+
 # If config doesn't exist yet, create it
 if [ ! -f /home/docker/github-backup/config/config.json ]; then
     cp /home/docker/github-backup/config.json.example /home/docker/github-backup/config/config.json

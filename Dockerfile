@@ -14,8 +14,10 @@ COPY backup.sh /home/docker/github-backup/backup.sh
 WORKDIR /home/docker/github-backup
 RUN apk add --no-cache python3 py3-pip git; \
     pip3 install --upgrade pip; \
-    pip3 install -r requirements.txt; \
-    chmod +x backup.sh
+    pip3 install -r requirements.txt;
+
+RUN apk add --no-cache --upgrade bash
+RUN chmod +x backup.sh
 
 # Define default command.
-CMD ["./backup.sh"]
+CMD ["bash", "./backup.sh"]
